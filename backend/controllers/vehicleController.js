@@ -432,7 +432,7 @@ const getAttestrDataHelper = async (reg, req) => {
 
   const API_KEY = process.env.ATTESTR_API_KEY;
 
-  if (!API_KEY) {
+  if (!API_KEY || API_KEY === "your_attestr_auth_token_here") {
      setting.value = Math.max(0, setting.value - 1);
      await setting.save();
 
