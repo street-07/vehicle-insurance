@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+import fs from "fs";
 import connectDB from "./config/db.js";
 import vehicleRoutes from "./routes/vehicleRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -27,13 +28,14 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/sync", syncRoutes);
 
-// Serve static assets in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+// Serve static assets in production if they exist
+const frontendDistPath = path.join(__dirname, "../frontend/dist");
+if (process.env.NODE_ENV === "production" && fs.existsSync(frontendDistPath)) {
+  app.use(express.static(frontendDistPath));
   
   // Return the main index.html for any frontend route
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
+    res.sendFile(path.resolve(frontendDistPath, "index.html"));
   });
 } else {
   app.get("/", (req, res) => {

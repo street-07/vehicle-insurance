@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 
+// Disable command buffering so queries fail immediately if disconnected
+mongoose.set("bufferCommands", false);
+
 const connectDB = async () => {
   try {
     if (!process.env.MONGO_URI) return;
