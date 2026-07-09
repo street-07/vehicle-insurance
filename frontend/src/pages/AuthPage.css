@@ -1,0 +1,104 @@
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-color, #e0e5ec);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--bg-color, #e0e5ec);
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  box-shadow: 12px 12px 24px rgba(0,0,0,0.1), -12px -12px 24px rgba(255,255,255,0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-logo {
+  font-family: 'Lastica', 'Syncopate', sans-serif;
+  color: var(--primary, #4169E1);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-title {
+  color: var(--text-main, #333);
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.auth-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.auth-form input, .auth-form select {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--bg-color, #e0e5ec);
+  box-shadow: inset 6px 6px 12px rgba(0,0,0,0.05), inset -6px -6px 12px rgba(255,255,255,0.8);
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text-main, #333);
+}
+
+.auth-form input:focus, .auth-form select:focus {
+  outline: 2px solid var(--primary, #4169E1);
+}
+
+.auth-submit-btn {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary, #4169E1);
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 6px 6px 12px rgba(0,0,0,0.1), -6px -6px 12px rgba(255,255,255,0.8);
+  transition: transform 0.1s;
+}
+
+.auth-submit-btn:active {
+  transform: scale(0.96);
+  box-shadow: inset 4px 4px 8px rgba(0,0,0,0.2);
+}
+
+.auth-error {
+  width: 100%;
+  padding: 0.8rem;
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.auth-switch {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: var(--text-light, #777);
+}
+
+.auth-switch span {
+  color: var(--primary, #4169E1);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.auth-switch span:hover {
+  text-decoration: underline;
+}

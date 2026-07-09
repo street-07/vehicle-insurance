@@ -1,0 +1,47 @@
+.ghost-protocol-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* Block standard selection to prevent easy copying */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.watermark-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  color: black;
+  font-size: 1.5rem;
+  font-family: monospace;
+  font-weight: bold;
+  word-wrap: break-word;
+  line-height: 2;
+  overflow: hidden;
+  transform: rotate(-15deg) scale(1.5);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.blackout-active::after {
+  content: "SECURITY PROTOCOL TRIPPED - SCREENSHOT BLOCKED";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  color: red;
+  z-index: 2147483647;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Lastica', sans-serif;
+  font-size: 2rem;
+  text-align: center;
+}

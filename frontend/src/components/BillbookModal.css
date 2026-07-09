@@ -1,0 +1,485 @@
+.bb-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(230, 234, 240, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.bb-modal-content {
+  background: var(--bg-color);
+  width: 98vw;
+  height: 95vh;
+  border-radius: 24px;
+  border: var(--clay-border);
+  box-shadow: var(--shadow-outer);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* NAVBAR UPDATES */
+.bb-navbar {
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid rgba(0,0,0,0.1);
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.bb-navbar h2 {
+  font-family: 'Lastica', 'Syncopate', sans-serif;
+  font-size: 1.2rem;
+  color: var(--primary, #4169E1);
+  margin: 0;
+}
+
+.bb-nav-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+}
+
+.bb-search-box {
+  display: flex;
+  align-items: center;
+  background: var(--bg-color);
+  border: none;
+  box-shadow: var(--shadow-inner);
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+  width: 300px;
+}
+
+.bb-search-icon {
+  color: #888;
+  margin-right: 0.5rem;
+}
+
+.bb-search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.bb-filter-box {
+  display: flex;
+  align-items: center;
+  background: var(--bg-color);
+  border: none;
+  box-shadow: var(--shadow-inner);
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+}
+
+.bb-filter-icon {
+  color: #888;
+  margin-right: 0.5rem;
+}
+
+.bb-filter-box select {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.bb-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.bb-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-outer-sm);
+}
+
+.bb-export-btn {
+  background: #27ae60;
+  color: #fff;
+}
+
+.bb-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--error, #e74c3c);
+  font-weight: bold;
+  line-height: 1;
+  margin-left: 1rem;
+}
+
+/* TABLE LAYOUT */
+.bb-table-container {
+  flex: 1;
+  overflow: auto;
+  overscroll-behavior-x: contain;
+  padding: 0;
+  background: #fff;
+  position: relative;
+}
+
+.bb-table-container::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.bb-table-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+
+.bb-excel-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: max-content;
+  min-width: 100%;
+  font-size: 0.8rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.bb-excel-table th, 
+.bb-excel-table td {
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 0.2rem 0.3rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.bb-clickable-cell {
+  transition: filter 0.2s;
+}
+
+.bb-clickable-cell:hover {
+  filter: brightness(0.95);
+}
+
+.bb-excel-table thead th {
+  position: sticky;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* High Contrast Headers */
+.bb-excel-table thead tr:first-child th {
+  top: 0;
+  z-index: 20;
+  background: #1a252f;
+  color: #ecf0f1;
+  border-bottom: 2px solid #000;
+}
+
+.bb-excel-table thead tr:nth-child(2) th {
+  top: 25px; 
+  z-index: 19;
+  background: #2c3e50;
+  color: #bdc3c7;
+  border-bottom: 2px solid #000;
+}
+
+.bb-doc-group {
+  border-left: 2px solid #555 !important;
+  border-right: 2px solid #555 !important;
+}
+
+.bb-excel-table td {
+  color: #444;
+  background: #fff;
+}
+
+.sticky-col-1 {
+  position: sticky;
+  left: 0;
+  z-index: 10;
+  width: 120px;
+  min-width: 120px;
+  max-width: none;
+}
+
+.sticky-col-2 {
+  position: sticky;
+  left: 120px;
+  z-index: 10;
+  width: 150px;
+  min-width: 150px;
+  max-width: none;
+}
+
+.sticky-col-3 {
+  position: sticky;
+  left: 270px;
+  z-index: 10;
+  width: 100px;
+  min-width: 100px;
+  max-width: none;
+}
+
+.sticky-col-4 {
+  position: sticky;
+  left: 370px;
+  z-index: 10;
+  width: 110px;
+  min-width: 110px;
+  max-width: none;
+  border-right: 4px solid rgba(0,0,0,0.15) !important;
+  padding-right: 15px !important;
+}
+
+.bb-excel-table tbody td.sticky-col-1,
+.bb-excel-table tbody td.sticky-col-2,
+.bb-excel-table tbody td.sticky-col-3,
+.bb-excel-table tbody td.sticky-col-4 {
+  background: #fdfdfd;
+}
+
+.bb-excel-table thead tr:first-child th.sticky-col-1,
+.bb-excel-table thead tr:first-child th.sticky-col-2,
+.bb-excel-table thead tr:first-child th.sticky-col-3,
+.bb-excel-table thead tr:first-child th.sticky-col-4 {
+  z-index: 30;
+  background: #1a252f;
+}
+
+.bb-excel-table tbody tr:hover td.sticky-col-1,
+.bb-excel-table tbody tr:hover td.sticky-col-2,
+.bb-excel-table tbody tr:hover td.sticky-col-3,
+.bb-excel-table tbody tr:hover td.sticky-col-4 {
+  background: #eef2ff;
+}
+
+/* Inputs */
+.bb-excel-table input {
+  width: 50px;
+  border: 1px solid transparent;
+  background: transparent;
+  text-align: center;
+  font-size: 0.8rem;
+  font-family: inherit;
+  outline: none;
+  border-radius: 4px;
+}
+
+.bb-excel-table input:focus {
+  border: 1px solid var(--primary, #4169E1);
+  background: #fff;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  color: #000;
+}
+
+.bb-excel-table input::placeholder {
+  color: #ccc;
+}
+
+.bb-date-cell {
+  color: #666;
+  font-family: monospace;
+  font-size: 0.85rem;
+  background: #fafafa;
+}
+
+.bb-fw-bold {
+  font-weight: bold;
+}
+
+/* Dues / Total column */
+.bb-total-col {
+  border-left: 2px solid var(--success, #2ecc71) !important;
+}
+
+.bb-excel-table thead th.bb-total-col {
+  background: #1e3d29;
+  color: #2ecc71;
+}
+
+.bb-total-val {
+  background: rgba(46, 204, 113, 0.05) !important;
+  border-left: 2px solid var(--success, #2ecc71) !important;
+  color: var(--success, #2ecc71) !important;
+  font-size: 0.95rem;
+}
+
+.bb-total-val.has-dues {
+  background: rgba(231, 76, 60, 0.1) !important;
+  border-left: 2px solid var(--error, #e74c3c) !important;
+  color: var(--error, #e74c3c) !important;
+}
+
+/* Clickable plate */
+.bb-clickable-plate {
+  cursor: pointer;
+  color: var(--primary, #4169E1);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  transition: color 0.2s;
+}
+
+.bb-clickable-plate:hover {
+  color: #2980b9;
+}
+
+/* Past Rows Styling */
+.bb-past-row td {
+  background: #fdfdfd;
+  color: #888;
+}
+
+.bb-past-plate {
+  text-align: right !important;
+  padding-right: 1.5rem !important;
+  color: #7f8c8d !important;
+  font-style: italic;
+  font-weight: normal;
+  background: #f5f6fa !important;
+}
+
+.bb-past-info {
+  text-align: center;
+  font-style: italic;
+  color: #95a5a6;
+  letter-spacing: 1px;
+}
+
+.bb-past-cell {
+  background: #f1f2f6;
+  font-size: 0.75rem;
+  color: #a4b0be;
+}
+
+/* Insurance Colors */
+:root {
+  --ins-wants: #2ecc71;
+  --ins-done: #3498db;
+  --ins-no: #e74c3c;
+}
+
+.bb-ins-group {
+  border-left: 2px solid #555 !important;
+}
+
+.bb-excel-table tbody td input[type="number"]::-webkit-inner-spin-button,
+.bb-excel-table tbody td input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* YEAR SELECTION MODAL */
+.bb-year-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 4000;
+}
+
+.bb-year-modal {
+  background: var(--bg-color);
+  border-radius: 16px;
+  width: 400px;
+  box-shadow: none;
+  border: 1px solid #000;
+  overflow: hidden;
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.bb-year-modal-header {
+  background: var(--primary, #4169E1);
+  color: white;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bb-year-modal-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.bb-year-modal-header button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.bb-year-modal-body {
+  padding: 1.5rem;
+}
+
+.bb-year-modal-body p {
+  margin: 0 0 1rem 0;
+  color: #555;
+}
+
+.bb-year-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.bb-year-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f8f9fa;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.bb-year-label:hover {
+  background: #eef2ff;
+}
+
+.bb-year-modal-footer {
+  padding: 1rem 1.5rem;
+  background: #f8f9fa;
+  text-align: right;
+  border-top: 1px solid #ddd;
+}
+
+.bb-year-modal-footer button {
+  background: var(--success, #2ecc71);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+}

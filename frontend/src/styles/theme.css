@@ -1,0 +1,103 @@
+:root {
+  --bg-color: #ffffff;
+  --text-main: #2d3748;
+  --text-light: #718096;
+  --primary: #436cfb;
+  --success: #1ebba6;
+  --error: #e24c4c;
+  
+  /* Minimal Matte Claymorphism on White (No white glows/shines, only soft base shadows) */
+  --shadow-outer: 8px 12px 24px rgba(163, 177, 198, 0.35), 
+                  inset -4px -4px 8px rgba(163, 177, 198, 0.25);
+                  
+  --shadow-inner: inset 3px 3px 6px rgba(163, 177, 198, 0.3);
+                  
+  --shadow-outer-sm: 4px 6px 12px rgba(163, 177, 198, 0.3),
+                     inset -2px -2px 4px rgba(163, 177, 198, 0.25);
+                     
+  --shadow-inner-sm: inset 2px 2px 4px rgba(163, 177, 198, 0.3);
+
+  --clay-border: 1px solid rgba(163, 177, 198, 0.3);
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: var(--bg-color);
+  margin: 0;
+  padding: 0;
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Lastica", "Syncopate", sans-serif;
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: 1.5px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Base button override to support claymorphic bounce and border rules */
+button {
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  border: var(--clay-border);
+  background: var(--bg-color);
+  box-shadow: var(--shadow-outer-sm);
+  color: var(--text-main);
+  border-radius: 14px;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 8px 16px rgba(163, 177, 198, 0.35), 
+              inset -2px -2px 4px rgba(163, 177, 198, 0.25);
+}
+
+button:active {
+  box-shadow: var(--shadow-inner-sm);
+  transform: translateY(1px);
+}
+
+/* Custom Scrollbar for Clay UI */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border: 3px solid var(--bg-color);
+  border-radius: 6px;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Global Nav Button States */
+.nav-btn.active {
+  background-color: var(--primary) !important;
+  color: #ffffff !important;
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(67, 108, 251, 0.3) !important;
+  border-color: var(--primary) !important;
+}
+
+.nav-btn.outline {
+  background-color: var(--bg-color) !important;
+  color: var(--text-main) !important;
+  box-shadow: var(--shadow-outer-sm) !important;
+  border: var(--clay-border) !important;
+}

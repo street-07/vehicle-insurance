@@ -1,0 +1,364 @@
+.pm-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(230, 234, 240, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.pm-modal-content {
+  background: var(--bg-color);
+  width: 95vw;
+  max-width: 1200px;
+  height: 90vh; /* Fixed height to prevent page scrolling */
+  border-radius: 24px;
+  border: var(--clay-border);
+  box-shadow: var(--shadow-outer);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* No scrolling for the main modal */
+}
+
+.pm-modal-header {
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  flex-shrink: 0;
+}
+
+.pm-modal-header h2 {
+  font-family: 'Lastica', 'Syncopate', sans-serif;
+  font-size: 1.2rem;
+  color: var(--primary);
+  margin: 0;
+}
+
+.pm-close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--error);
+  font-weight: bold;
+  line-height: 1;
+}
+
+.pm-navbar {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0.8rem 1.5rem;
+  background: rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  box-shadow: inset 0 -4px 6px -4px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+}
+
+.pm-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.pm-nav-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #777;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.pm-nav-value {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--text-main);
+}
+
+.pm-nav-divider {
+  width: 1px;
+  background: rgba(0,0,0,0.1);
+}
+
+.pm-body-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  flex: 1; /* Fills remaining height */
+  overflow: hidden; /* No scrolling inside the grid area */
+}
+
+/* Base feature box styling - exactly equal size */
+.pm-feature-box {
+  background: var(--bg-color);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: var(--shadow-outer-sm);
+  border: var(--clay-border);
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Fill the grid cell */
+  overflow: hidden; /* Keep content tightly bound */
+}
+
+.pm-feature-box.editing {
+  border: var(--clay-border);
+  box-shadow: var(--shadow-inner-sm);
+}
+
+.pm-feature-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
+  flex-shrink: 0;
+}
+
+.pm-feature-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+.pm-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 4px;
+  transition: all 0.2s;
+}
+
+.pm-icon-btn.add-icon {
+  color: var(--success);
+  background: rgba(46, 204, 113, 0.1);
+}
+
+.pm-icon-btn.close-icon {
+  color: var(--error);
+  background: rgba(231, 76, 60, 0.1);
+}
+
+.pm-icon-btn:hover {
+  transform: scale(1.1);
+}
+
+.pm-feature-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.5rem;
+  flex-shrink: 0;
+}
+
+.pm-info-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.4rem;
+}
+
+.pm-info-row.renewal-row {
+  background: rgba(0,0,0,0.02);
+  border-radius: 4px;
+}
+
+.pm-info-row span {
+  color: #777;
+}
+
+.pm-transactions {
+  flex: 1; /* Takes up remaining height in the box */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.pm-transactions h4 {
+  margin: 0 0 0.4rem 0;
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.pm-tx-list {
+  flex: 1;
+  overflow-y: auto; /* Internal scrolling only if there are too many past transactions */
+  padding-right: 0.2rem;
+}
+
+.pm-tx-list::-webkit-scrollbar {
+  width: 4px;
+}
+.pm-tx-list::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+
+.pm-tx-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  padding: 0.3rem;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
+}
+
+.pm-tx-date {
+  color: #555;
+}
+
+.pm-tx-amount {
+  font-weight: bold;
+  color: var(--text-main);
+}
+
+/* Edit Mode Form Styling */
+.pm-new-entry-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.2rem;
+}
+
+.pm-new-entry-form::-webkit-scrollbar {
+  width: 4px;
+}
+.pm-new-entry-form::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+
+.pm-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.pm-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.pm-form-group label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.pm-form-group input,
+.pm-form-group select {
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: none;
+  background: var(--bg-color);
+  box-shadow: var(--shadow-inner);
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: var(--text-main);
+}
+
+.pm-form-group input:focus,
+.pm-form-group select:focus {
+  outline: none;
+  border: 1px solid var(--primary);
+}
+
+.pm-installments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: rgba(0,0,0,0.02);
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.pm-installment-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.pm-total-summary {
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 0.4rem;
+  background: rgba(46, 204, 113, 0.1);
+  border-radius: 6px;
+  color: var(--success);
+  font-weight: bold;
+  margin-top: auto; /* Push to bottom of form */
+}
+
+.pm-form-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.pm-cancel-btn {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #777;
+  font-weight: bold;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.pm-save-btn {
+  flex: 2;
+  padding: 0.5rem;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  background-color: var(--success);
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-outer-sm);
+  transition: all 0.2s;
+}
+.pm-save-btn:active {
+  box-shadow: var(--shadow-inner-sm);
+  transform: scale(0.98);
+}
+
+@media (max-width: 900px) {
+  .pm-body-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .pm-body-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    overflow-y: auto;
+  }
+}
