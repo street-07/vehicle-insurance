@@ -491,6 +491,49 @@ const getAttestrDataHelper = async (reg, req) => {
   }
 };
 
+const parseAttestrDate = (dateStr) => {
+  if (!dateStr) return null;
+  if (dateStr instanceof Date) return dateStr;
+  
+  const dateStrTrimmed = String(dateStr).trim();
+  
+  // ISO/YYYY-MM-DD format
+  if (/^\d{4}-\d{2}-\d{2}/.test(dateStrTrimmed)) {
+    const d = new Date(dateStrTrimmed);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  
+  // DD-MM-YYYY format
+  const parts = dateStrTrimmed.split('-');
+  if (parts.length === 3 && parts[2].length === 4) {
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1; // 0-indexed month
+    const year = parseInt(parts[2], 10);
+    const d = new Date(year, month, day);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  
+  // DD/MM/YYYY format
+  const slashParts = dateStrTrimmed.split('/');
+  if (slashParts.length === 3 && slashParts[2].length === 4) {
+    const day = parseInt(slashParts[0], 10);
+    const month = parseInt(slashParts[1], 10) - 1;
+    const year = parseInt(slashParts[2], 10);
+    const d = new Date(year, month, day);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  
+  const parsed = new Date(dateStrTrimmed);
+  return isNaN(parsed.getTime()) ? null : parsed;
+};
+
+const calculateFitnessFallback = (registeredDateStr) => {
+  const d = parseAttestrDate(registeredDateStr);
+  if (!d) return null;
+  d.setFullYear(d.getFullYear() + 15);
+  return d;
+};
+
 const mapAttestrToVehicle = (vehicle, attestrResult) => {
   const data = attestrResult.data || attestrResult;
   if (!data) return;
@@ -499,28 +542,57 @@ const mapAttestrToVehicle = (vehicle, attestrResult) => {
   else if (data.owner) vehicle.fullName = data.owner;
 
   if (data.vehicleClass) vehicle.vehicleClass = data.vehicleClass;
+  else if (data.makerModel) vehicle.vehicleClass = data.makerModel;
+  else if (data.vehicleModel) vehicle.vehicleClass = data.vehicleModel;
   
-  if (data.fitnessUpto) vehicle.fitnessExpiry = new Date(data.fitnessUpto);
-  else if (data.registered && data.status) {
-    // Fallback if government values differ
-    const d = new Date(data.registered);
-    d.setFullYear(d.getFullYear() + 15);
-    vehicle.fitnessExpiry = d;
+  const fitness = parseAttestrDate(data.fitnessUpto);
+  if (fitness) {
+    vehicle.fitnessExpiry = fitness;
+  } else if (data.registered && data.status) {
+    const fallback = calculateFitnessFallback(data.registered);
+    if (fallback) vehicle.fitnessExpiry = fallback;
   }
 
-  if (data.taxUpto) vehicle.taxExpiry = new Date(data.taxUpto);
-  if (data.pucUpto) vehicle.pucExpiry = new Date(data.pucUpto);
-  if (data.permitUpto) vehicle.permitExpiry = new Date(data.permitUpto);
-  if (data.nationalPermitUpto) vehicle.nationalPermitExpiry = new Date(data.nationalPermitUpto);
-  if (data.insuranceUpto) vehicle.insuranceExpiry = new Date(data.insuranceUpto);
+  const tax = parseAttestrDate(data.taxUpto || data.taxPaidUpto);
+  if (tax) vehicle.taxExpiry = tax;
+
+  const puc = parseAttestrDate(data.pucUpto || data.pollutionCertificateUpto);
+  if (puc) vehicle.pucExpiry = puc;
+
+  const permit = parseAttestrDate(data.permitUpto);
+  if (permit) vehicle.permitExpiry = permit;
+
+  const nationalPermit = parseAttestrDate(data.nationalPermitUpto);
+  if (nationalPermit) vehicle.nationalPermitExpiry = nationalPermit;
+
+  const insurance = parseAttestrDate(data.insuranceUpto);
+  if (insurance) vehicle.insuranceExpiry = insurance;
 };
 
 export const fetchAttestrData = async (req, res) => {
   const { reg } = req.body;
   if (!reg) return res.status(400).json({ message: "Registration number required" });
   try {
-    const data = await getAttestrDataHelper(reg, req);
-    res.json(data);
+    const rawResult = await getAttestrDataHelper(reg, req);
+    const rawData = rawResult.data || rawResult;
+    
+    // Normalize data structure for the frontend
+    const normalizedData = {
+      ownerName: rawData.ownerName || rawData.owner || "",
+      vehicleClass: rawData.vehicleClass || rawData.makerModel || rawData.vehicleModel || "",
+      fitnessUpto: parseAttestrDate(rawData.fitnessUpto || (rawData.registered ? calculateFitnessFallback(rawData.registered) : null))?.toISOString() || null,
+      taxUpto: parseAttestrDate(rawData.taxUpto || rawData.taxPaidUpto)?.toISOString() || null,
+      pucUpto: parseAttestrDate(rawData.pucUpto || rawData.pollutionCertificateUpto)?.toISOString() || null,
+      permitUpto: parseAttestrDate(rawData.permitUpto)?.toISOString() || null,
+      nationalPermitUpto: parseAttestrDate(rawData.nationalPermitUpto)?.toISOString() || null,
+      insuranceUpto: parseAttestrDate(rawData.insuranceUpto)?.toISOString() || null
+    };
+
+    res.json({
+      valid: rawResult.valid !== undefined ? rawResult.valid : true,
+      message: rawResult.message || "RC details found",
+      data: normalizedData
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
